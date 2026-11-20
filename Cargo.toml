@@ -1,0 +1,24 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/protocol",
+    "crates/server",
+    "crates/cli",
+    "crates/gui",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["login1", "login2"]
+
+[workspace.dependencies]
+protocol = { path = "crates/protocol" }
+tokio = { version = "1.41", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+thiserror = "2.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json", "time"] }
+eframe = "0.29"
