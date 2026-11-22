@@ -2,8 +2,10 @@
 name = "protocol"
 version.workspace = true
 edition.workspace = true
+authors.workspace = true
+description = "RFC 42TAP (The Answer Protocol) wire format: commands, replies, events"
 
 [dependencies]
-serde = { workspace = true }
-serde_json = { workspace = true }
-thiserror = { workspace = true }
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true

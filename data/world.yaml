@@ -1,0 +1,255 @@
+spawn_room: "loc.arrakeen_gate"
+respawn_room: "loc.sietch_tabr"
+
+rooms:
+  loc.arrakeen_gate:
+    name: "Arrakeen Shield Wall Gate"
+    description: "Massive plascrete gates shield the city from Arrakis's blistering sandstorms. Traders and soldiers pass beneath the Atreides hawk banner."
+    exits:
+      north: "loc.market"
+      east: "loc.cantina"
+      south: "loc.spaceport"
+      west: "loc.desert_edge"
+    items:
+      - "item.crysknife"
+    npcs:
+      - "npc.atreides_guard"
+
+  loc.cantina:
+    name: "The Sandworm Cantina"
+    description: "A dim, spice-scented tavern where off-world smugglers trade rumors over spiced coffee."
+    exits:
+      west: "loc.arrakeen_gate"
+    items:
+      - "item.spice_coffee"
+    npcs:
+      - "npc.smuggler"
+
+  loc.market:
+    name: "Arrakeen Spice Market"
+    description: "Canvas awnings shade stalls piled high with cinnamon-scented melange, stillsuit parts, and water tokens."
+    exits:
+      south: "loc.arrakeen_gate"
+      east: "loc.palace_courtyard"
+    items:
+      - "item.spice_vial"
+    npcs:
+      - "npc.spice_merchant"
+
+  loc.palace_courtyard:
+    name: "Residency Courtyard"
+    description: "Rare date palms drink precious moisture along stone channels inside the fortified Atreides residency."
+    exits:
+      west: "loc.market"
+      south: "loc.spaceport"
+    items:
+      - "item.water_flask"
+    npcs:
+      - "npc.mentat"
+
+  loc.spaceport:
+    name: "Arrakeen Spaceport"
+    description: "Ornithopters roar across the landing field as Guild handlers unload heavy cargo containers."
+    exits:
+      north: "loc.arrakeen_gate"
+      east: "loc.palace_courtyard"
+    items:
+      - "item.thumper"
+    npcs: []
+
+  loc.desert_edge:
+    name: "Bleak Erg Border"
+    description: "Beyond the Shield Wall, endless golden dunes shimmer under Arrakis's twin moons and scorching sun."
+    exits:
+      east: "loc.arrakeen_gate"
+      west: "loc.spice_blow"
+    items:
+      - "item.stillsuit_patch"
+    npcs:
+      - "npc.harkonnen_scout"
+
+  loc.spice_blow:
+    name: "Open Desert Spice Blow"
+    description: "A rich violet vein of raw melange stains the sand. Rhythmic vibrations echo faintly beneath your boots."
+    exits:
+      east: "loc.desert_edge"
+      north: "loc.sietch_tabr"
+      south: "loc.worm_cavern"
+    items:
+      - "item.raw_melange"
+    npcs: []
+
+  loc.sietch_tabr:
+    name: "Sietch Tabr"
+    description: "A cool subterranean Fremen refuge sealed by moisture-trap doors. Blue-within-blue eyes watch you calmly."
+    exits:
+      south: "loc.spice_blow"
+    items:
+      - "item.maker_hooks"
+    npcs:
+      - "npc.stilgar"
+
+  loc.worm_cavern:
+    name: "Shai-Hulud Sand Pit"
+    description: "A colossal sinkhole churned into fine powder. A massive sandworm lurks beneath the dunes."
+    exits:
+      north: "loc.spice_blow"
+    items:
+      - "item.water_of_life"
+    npcs:
+      - "npc.sandworm"
+
+items:
+  item.crysknife:
+    name: "Crysknife"
+    description: "A sacred milky-white blade ground from the tooth of a dead sandworm."
+    obtainable: true
+    attack_bonus: 8
+    heal_hp: 0
+
+  item.spice_coffee:
+    name: "Spice Coffee"
+    description: "Dark, bitter coffee laced with melange that sharpens the senses."
+    obtainable: true
+    attack_bonus: 0
+    heal_hp: 20
+
+  item.spice_vial:
+    name: "Spice Vial"
+    description: "A sealed crystal cylinder filled with refined cinnamon-blue melange."
+    obtainable: true
+    attack_bonus: 0
+    heal_hp: 15
+
+  item.water_flask:
+    name: "Litrejon Water Flask"
+    description: "A Fremen seal-flask holding a full liter of pure reclaimed water."
+    obtainable: true
+    attack_bonus: 0
+    heal_hp: 30
+
+  item.thumper:
+    name: "Fremen Thumper"
+    description: "A spring-loaded stake used to summon Shai-Hulud across the open sand."
+    obtainable: true
+    attack_bonus: 2
+    heal_hp: 0
+
+  item.stillsuit_patch:
+    name: "Stillsuit Seal Kit"
+    description: "Replacement nose-plugs and heel-pump seals for desert survival."
+    obtainable: true
+    attack_bonus: 0
+    heal_hp: 10
+
+  item.raw_melange:
+    name: "Raw Melange"
+    description: "Unrefined spice harvested directly from a fresh desert blow."
+    obtainable: true
+    attack_bonus: 0
+    heal_hp: 25
+
+  item.maker_hooks:
+    name: "Maker Hooks"
+    description: "Long barbed gaffs used by Fremen sandriders to mount a Great Maker."
+    obtainable: true
+    attack_bonus: 5
+    heal_hp: 0
+
+  item.water_of_life:
+    name: "Water of Life"
+    description: "A glowing blue liquid resting on an ancient stone basin, guarded fiercely."
+    obtainable: false
+    attack_bonus: 0
+    heal_hp: 0
+
+  item.guild_solari:
+    name: "Guild Solari"
+    description: "Heavy Choam-minted coins accepted across the Imperium."
+    obtainable: true
+    attack_bonus: 0
+    heal_hp: 0
+
+npcs:
+  npc.atreides_guard:
+    name: "Atreides Trooper"
+    role: "dialogue"
+    description: "An armored house soldier scanning the horizon with binocs."
+    dialogue:
+      - "Walk without rhythm if you cross the Erg beyond the western gate."
+      - "Harkonnen scouts have been raiding near the Bleak Erg Border."
+    hp: 50
+    damage: 8
+
+  npc.smuggler:
+    name: "Gurney Smuggler"
+    role: "dialogue"
+    description: "A scarred smuggler nursing a cup of spice coffee."
+    dialogue:
+      - "The Spacing Guild pays double for pure melange, no questions asked."
+    hp: 35
+    damage: 6
+
+  npc.mentat:
+    name: "Thufir Mentat"
+    role: "dialogue"
+    description: "A master strategist with sapho-stained lips calculating troop movements."
+    dialogue:
+      - "It is by will alone I set my mind in motion. Beware the sandworm to the southwest."
+    hp: 40
+    damage: 5
+
+  npc.spice_merchant:
+    name: "Chani Spice Trader"
+    role: "quest_giver"
+    description: "A desert trader weighing vials of melange on a brass scale."
+    dialogue:
+      - "My caravan needs Raw Melange from the western spice blow. Bring me some!"
+    hp: 30
+    damage: 4
+    quest_id: "quest.spice_harvest"
+
+  npc.stilgar:
+    name: "Stilgar"
+    role: "quest_giver"
+    description: "Naib of Sietch Tabr, wrapped in a weathered desert robe."
+    dialogue:
+      - "Drive the Harkonnen Scout from the Bleak Erg Border and earn the respect of the Sietch."
+    hp: 65
+    damage: 12
+    quest_id: "quest.harkonnen_raid"
+
+  npc.harkonnen_scout:
+    name: "Harkonnen Scout"
+    role: "enemy"
+    description: "A pale raider in black armor clutching a poisoned stunner."
+    dialogue:
+      - "For Baron Harkonnen! This spice sector is ours!"
+    hp: 35
+    damage: 10
+
+  npc.sandworm:
+    name: "Shai-Hulud"
+    role: "enemy"
+    description: "A towering sandworm whose crystalline maw radiates furnace heat."
+    dialogue:
+      - "*A deafening roar shakes the dunes*"
+    hp: 80
+    damage: 18
+
+quests:
+  quest.spice_harvest:
+    giver: "npc.spice_merchant"
+    description: "Harvest Raw Melange from the Open Desert Spice Blow and return to Chani Spice Trader."
+    objective_type: "collect_item"
+    target: "item.raw_melange"
+    required_count: 1
+    reward_item: "item.guild_solari"
+
+  quest.harkonnen_raid:
+    giver: "npc.stilgar"
+    description: "Defeat the Harkonnen Scout patrolling the Bleak Erg Border."
+    objective_type: "defeat_npc"
+    target: "npc.harkonnen_scout"
+    required_count: 1
+    reward_item: "item.maker_hooks"
