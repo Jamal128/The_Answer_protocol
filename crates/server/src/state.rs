@@ -343,18 +343,25 @@ impl GameState {
             return ServerReply::from(ErrorKind::NotAuthenticated);
         };
 
-        let found_idx = self.room_items.get(&room_id).and_then(|items| {
-            items.iter().position(|id| {
-                self.world
-                    .items
-                    .get(id)
-                    .is_some_and(|def| def.obtainable && matches_reference(item_ref, id, &def.name))
+        let matched = self.room_items.get(&room_id).and_then(|items| {
+            items.iter().enumerate().find_map(|(idx, id)| {
+                self.world.items.get(id).and_then(|def| {
+                    if matches_reference(item_ref, id, &def.name) {
+                        Some((idx, def.obtainable))
+                    } else {
+                        None
+                    }
+                })
             })
         });
 
-        let Some(idx) = found_idx else {
+        let Some((idx, obtainable)) = matched else {
             return ServerReply::from(ErrorKind::ItemNotFound);
         };
+
+        if !obtainable {
+            return ServerReply::from(ErrorKind::ItemNotObtainable);
+        }
 
         let item_id = self
             .room_items
@@ -898,20 +905,22 @@ impl GameState {
     }
 
     fn complete_quest(&mut self, username: &str, quest_id: &str, reward_item: &str) {
-        if let Some(p) = self.players.get_mut(username) {
-            p.quests.insert(quest_id.to_string(), QuestState::Completed);
-            p.inventory.push(reward_item.to_string());
-        }
+            if let Some(p) = self.players.get_mut(username) {
+                p.quests.insert(quest_id.to_string(), QuestState::Completed);
+                if !p.inventory.iter().any(|item| item == reward_item) {
+                    p.inventory.push(reward_item.to_string());
+                }
+            }
 
-        info!(event = "quest_completed", %username, %quest_id, %reward_item);
-        self.send_to_player(
-            username,
-            ServerEvent::QuestComplete {
-                quest_id: quest_id.to_string(),
-                reward: reward_item.to_string(),
-            },
-        );
-    }
+            info!(event = "quest_completed", %username, %quest_id, %reward_item);
+            self.send_to_player(
+                username,
+                ServerEvent::QuestComplete {
+                    quest_id: quest_id.to_string(),
+                    reward: reward_item.to_string(),
+                },
+            );
+        }
 
     fn cmd_group(&mut self, username: &str, action: GroupAction) -> ServerReply {
         match action {

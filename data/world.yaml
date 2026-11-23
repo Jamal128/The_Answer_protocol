@@ -170,6 +170,13 @@ items:
     attack_bonus: 0
     heal_hp: 0
 
+  item.fremen_stillsuit:
+    name: "Fremen Stillsuit"
+    description: "Masterwork desert survival suit gifted by Stilgar."
+    obtainable: true
+    attack_bonus: 4
+    heal_hp: 15
+
 npcs:
   npc.atreides_guard:
     name: "Atreides Trooper"
@@ -252,4 +259,4 @@ quests:
     objective_type: "defeat_npc"
     target: "npc.harkonnen_scout"
     required_count: 1
-    reward_item: "item.maker_hooks"
+    reward_item: "item.fremen_stillsuit"

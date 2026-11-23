@@ -278,6 +278,14 @@ fn render_left_pilot_dock(app: &mut TapGuiApp, ctx: &egui::Context) {
                             .strong()
                             .color(FREMEN_CYAN),
                     );
+                    ui.label(
+                        egui::RichText::new(format!(
+                            "Active Squad ID: {} (auto-assigned)",
+                            app.group_id.as_deref().unwrap_or("NONE")
+                        ))
+                        .small()
+                        .color(TEXT_MUTED),
+                    );
                     ui.add_space(4.0);
                     ui.horizontal(|ui| {
                         if ui.button("CREATE").clicked() {
@@ -288,10 +296,16 @@ fn render_left_pilot_dock(app: &mut TapGuiApp, ctx: &egui::Context) {
                             app.group_id = None;
                         }
                     });
+                    ui.add_space(4.0);
+                    ui.label(
+                        egui::RichText::new("Pilot name (for INVITE / JOIN):")
+                            .small()
+                            .color(TEXT_MUTED),
+                    );
                     ui.horizontal(|ui| {
                         ui.add(
                             egui::TextEdit::singleline(&mut app.group_target_input)
-                                .hint_text("pilot / leader")
+                                .hint_text("e.g. Chani")
                                 .desired_width(115.0),
                         );
                         if ui.button("INVITE").clicked()
