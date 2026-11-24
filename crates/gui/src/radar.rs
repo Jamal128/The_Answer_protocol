@@ -204,7 +204,7 @@ impl WorldRadar {
         painter.rect_stroke(
             rect,
             Rounding::same(8.0),
-            Stroke::new(1.2, Color32::from_rgb(65, 50, 24)),
+            Stroke::new(1.2_f32, Color32::from_rgb(65, 50, 24)),
         );
 
         let grid_step = 32.0 * self.zoom;
@@ -212,7 +212,7 @@ impl WorldRadar {
         while gx < rect.right() {
             painter.line_segment(
                 [Pos2::new(gx, rect.top()), Pos2::new(gx, rect.bottom())],
-                Stroke::new(1.0, Color32::from_rgba_unmultiplied(56, 189, 248, 14)),
+                Stroke::new(1.0_f32, Color32::from_rgba_unmultiplied(56, 189, 248, 14)),
             );
             gx += grid_step;
         }
@@ -220,7 +220,7 @@ impl WorldRadar {
         while gy < rect.bottom() {
             painter.line_segment(
                 [Pos2::new(rect.left(), gy), Pos2::new(rect.right(), gy)],
-                Stroke::new(1.0, Color32::from_rgba_unmultiplied(56, 189, 248, 14)),
+                Stroke::new(1.0_f32, Color32::from_rgba_unmultiplied(56, 189, 248, 14)),
             );
             gy += grid_step;
         }
@@ -248,12 +248,12 @@ impl WorldRadar {
         painter.circle_stroke(
             player_pos,
             64.0 * self.zoom,
-            Stroke::new(1.0, Color32::from_rgba_unmultiplied(234, 164, 58, 32)),
+            Stroke::new(1.0_f32, Color32::from_rgba_unmultiplied(234, 164, 58, 32)),
         );
         painter.circle_stroke(
             player_pos,
             132.0 * self.zoom,
-            Stroke::new(1.0, Color32::from_rgba_unmultiplied(56, 189, 248, 22)),
+            Stroke::new(1.0_f32, Color32::from_rgba_unmultiplied(56, 189, 248, 22)),
         );
 
         // 1. Draw all known corridor edges
@@ -267,7 +267,7 @@ impl WorldRadar {
                     } else {
                         Color32::from_rgb(48, 56, 74)
                     };
-                    painter.line_segment([p1, p2], Stroke::new(1.8, stroke_col));
+                    painter.line_segment([p1, p2], Stroke::new(1.8_f32, stroke_col));
                 }
             }
         }
@@ -279,7 +279,7 @@ impl WorldRadar {
                 let pb = to_screen(b.gx, b.gy);
                 painter.line_segment(
                     [pa, pb],
-                    Stroke::new(3.0, Color32::from_rgba_unmultiplied(250, 204, 21, 145)),
+                    Stroke::new(3.0_f32, Color32::from_rgba_unmultiplied(250, 204, 21, 145)),
                 );
             }
         }
@@ -344,7 +344,7 @@ impl WorldRadar {
             painter.rect_stroke(
                 node_rect,
                 Rounding::same(6.0),
-                Stroke::new(if is_current { 2.0 } else { 1.2 }, stroke_col),
+                Stroke::new(if is_current { 2.0 } else { 1.2_f32 }, stroke_col),
             );
 
             let label = if node.visited {

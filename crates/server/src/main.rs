@@ -6,7 +6,7 @@ use std::net::SocketAddr;
 use std::sync::Arc;
 
 use protocol::{Command, ErrorKind, ServerMessage, ServerReply, MAX_LINE_LENGTH};
-use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
+use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader, AsyncReadExt};
 use tokio::net::{TcpListener, TcpStream};
 use tokio::sync::{mpsc, RwLock};
 use tracing::{error, info, warn};
@@ -113,28 +113,32 @@ async fn handle_client(stream: TcpStream, addr: SocketAddr, state: Arc<RwLock<Ga
     }
 
     let mut reader = BufReader::new(read_half);
-    let mut line_buf = String::new();
+    let mut raw: Vec<u8> = Vec::with_capacity(MAX_LINE_LENGTH + 2);
     let mut authenticated_user: Option<String> = None;
 
     loop {
-        line_buf.clear();
-        let bytes_read = match reader.read_line(&mut line_buf).await {
-            Ok(0) => break, // Clean EOF
-            Ok(n) => n,
+        let line = match read_bounded_line(&mut reader, &mut raw).await {
+            Ok(LineRead::Eof) => break,
+            Ok(LineRead::Line(l)) => l,
+            Ok(LineRead::TooLong) => {
+                let reply = ServerReply::from(ErrorKind::LineTooLong);
+                warn!(event = "line_too_long", %addr, reply = %reply);
+                let _ = tx.send(ServerMessage::Reply(reply));
+                continue;
+            }
+            Ok(LineRead::BadUtf8) => {
+                let reply = ServerReply::from(ErrorKind::BadRequest);
+                warn!(event = "invalid_utf8", %addr, reply = %reply);
+                let _ = tx.send(ServerMessage::Reply(reply));
+                continue;
+            }
             Err(err) => {
                 warn!(event = "socket_read_error", %addr, error = %err);
                 break;
             }
         };
 
-        if bytes_read > MAX_LINE_LENGTH + 2 {
-            let reply = ServerReply::from(ErrorKind::LineTooLong);
-            warn!(event = "line_too_long", %addr, bytes = bytes_read);
-            let _ = tx.send(ServerMessage::Reply(reply));
-            continue;
-        }
-
-        let cmd = match line_buf.parse::<Command>() {
+        let cmd = match line.parse::<Command>() {
             Ok(c) => c,
             Err(err) => {
                 let reply = ServerReply::from(err);
@@ -195,4 +199,37 @@ async fn handle_client(stream: TcpStream, addr: SocketAddr, state: Arc<RwLock<Ga
     if let Err(err) = writer_handle.await {
         error!(event = "writer_task_panic", %addr, error = %err);
     }
+}
+
+enum LineRead {
+    Eof,
+    Line(String),
+    TooLong,
+    BadUtf8,
+}
+
+async fn read_bounded_line<R: tokio::io::AsyncBufRead + Unpin>(
+    reader: &mut R,
+    buf: &mut Vec<u8>,
+) -> std::io::Result<LineRead> {
+    let limit = (MAX_LINE_LENGTH + 2) as u64;
+    buf.clear();
+    let n = (&mut *reader).take(limit).read_until(b'\n', buf).await?;
+    if n == 0 {
+        return Ok(LineRead::Eof);
+    }
+    if buf.last() != Some(&b'\n') && n as u64 >= limit {
+        loop {
+            buf.clear();
+            let m = (&mut *reader).take(4096).read_until(b'\n', buf).await?;
+            if m == 0 || buf.last() == Some(&b'\n') {
+                break;
+            }
+        }
+        return Ok(LineRead::TooLong);
+    }
+    Ok(match String::from_utf8(std::mem::take(buf)) {
+        Ok(s) => LineRead::Line(s),
+        Err(_) => LineRead::BadUtf8,
+    })
 }

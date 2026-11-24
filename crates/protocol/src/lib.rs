@@ -163,7 +163,7 @@ pub enum ErrorKind {
     AlreadyInGroup,
     ItemNotFound,
     ItemNotInInventory,
-	ItemNotObtainable,
+    ItemNotObtainable,
     NpcNotFound,
     NpcNotHostile,
     NoQuestAvailable,
@@ -187,9 +187,10 @@ impl ErrorKind {
             Self::NoExit => RfcErrorCode::NoExit,
             Self::NotInGroup => RfcErrorCode::NotInGroup,
             Self::AlreadyInGroup => RfcErrorCode::AlreadyInGroup,
-            Self::ItemNotFound | Self::ItemNotInInventory | Self::NpcNotFound | Self::ItemNotObtainable => {
-                RfcErrorCode::NotFound
-            }
+            Self::ItemNotFound
+            | Self::ItemNotInInventory
+            | Self::NpcNotFound
+            | Self::ItemNotObtainable => RfcErrorCode::NotFound,
             Self::NpcNotHostile => RfcErrorCode::NpcNotHostile,
             Self::NoQuestAvailable => RfcErrorCode::NoQuestAvailable,
             Self::BadRequest => RfcErrorCode::BadRequest,
@@ -216,7 +217,7 @@ impl ErrorKind {
             Self::AlreadyInGroup => "ALREADY_IN_GROUP",
             Self::ItemNotFound => "ITEM_NOT_FOUND",
             Self::ItemNotInInventory => "ITEM_NOT_IN_INVENTORY",
-			Self::ItemNotObtainable => "ITEM_NOT_OBTAINABLE",
+            Self::ItemNotObtainable => "ITEM_NOT_OBTAINABLE",
             Self::NpcNotFound => "NPC_NOT_FOUND",
             Self::NpcNotHostile => "NPC_NOT_HOSTILE",
             Self::NoQuestAvailable => "NO_QUEST_AVAILABLE",

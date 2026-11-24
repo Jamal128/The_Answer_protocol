@@ -22,7 +22,7 @@ fn render_top_hud(app: &mut TapGuiApp, ctx: &egui::Context) {
         .frame(
             egui::Frame::none()
                 .fill(Color32::from_rgb(14, 17, 25))
-                .stroke(Stroke::new(1.0, Color32::from_rgb(72, 54, 24)))
+                .stroke(Stroke::new(1.0_f32, Color32::from_rgb(72, 54, 24)))
                 .inner_margin(egui::Margin::symmetric(12.0, 8.0)),
         )
         .show(ctx, |ui| {
@@ -117,7 +117,7 @@ fn render_left_pilot_dock(app: &mut TapGuiApp, ctx: &egui::Context) {
         .frame(
             egui::Frame::none()
                 .fill(PANEL_SLATE)
-                .stroke(Stroke::new(1.0, BORDER_SUBTLE))
+                .stroke(Stroke::new(1.0_f32, BORDER_SUBTLE))
                 .inner_margin(egui::Margin::same(10.0)),
         )
         .show(ctx, |ui| {
@@ -331,7 +331,7 @@ fn render_right_radar_dock(app: &mut TapGuiApp, ctx: &egui::Context) {
         .frame(
             egui::Frame::none()
                 .fill(PANEL_SLATE)
-                .stroke(Stroke::new(1.0, BORDER_SUBTLE))
+                .stroke(Stroke::new(1.0_f32, BORDER_SUBTLE))
                 .inner_margin(egui::Margin::same(10.0)),
         )
         .show(ctx, |ui| {
@@ -348,7 +348,7 @@ fn render_bottom_terminal(app: &mut TapGuiApp, ctx: &egui::Context) {
         .frame(
             egui::Frame::none()
                 .fill(Color32::from_rgb(9, 11, 17))
-                .stroke(Stroke::new(1.0, BORDER_SUBTLE))
+                .stroke(Stroke::new(1.0_f32, BORDER_SUBTLE))
                 .inner_margin(egui::Margin::same(10.0)),
         )
         .show(ctx, |ui| {
@@ -612,7 +612,7 @@ fn render_center_sector(app: &mut TapGuiApp, ctx: &egui::Context) {
 
                             egui::Frame::none()
                                 .fill(Color32::from_rgb(17, 21, 31))
-                                .stroke(Stroke::new(1.0, accent))
+                                .stroke(Stroke::new(1.0_f32, accent))
                                 .rounding(Rounding::same(6.0))
                                 .inner_margin(egui::Margin::same(8.0))
                                 .show(ui, |ui| {
@@ -696,7 +696,7 @@ fn render_center_sector(app: &mut TapGuiApp, ctx: &egui::Context) {
                 // Dialogue Transmission Box
                 egui::Frame::none()
                     .fill(Color32::from_rgb(24, 21, 16))
-                    .stroke(Stroke::new(1.0, SPICE_AMBER))
+                    .stroke(Stroke::new(1.0_f32, SPICE_AMBER))
                     .rounding(Rounding::same(6.0))
                     .inner_margin(egui::Margin::same(10.0))
                     .show(ui, |ui| {

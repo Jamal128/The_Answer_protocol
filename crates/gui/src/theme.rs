@@ -22,27 +22,27 @@ pub fn apply_modern_mud_theme(ctx: &egui::Context) {
     visuals.extreme_bg_color = Color32::from_rgb(8, 10, 15);
 
     visuals.widgets.noninteractive.bg_fill = PANEL_SLATE;
-    visuals.widgets.noninteractive.fg_stroke = Stroke::new(1.0, TEXT_SAND);
-    visuals.widgets.noninteractive.bg_stroke = Stroke::new(1.0, BORDER_SUBTLE);
+    visuals.widgets.noninteractive.fg_stroke = Stroke::new(1.0_f32, TEXT_SAND);
+    visuals.widgets.noninteractive.bg_stroke = Stroke::new(1.0_f32, BORDER_SUBTLE);
     visuals.widgets.noninteractive.rounding = Rounding::same(6.0);
 
     visuals.widgets.inactive.bg_fill = CARD_ELEVATED;
-    visuals.widgets.inactive.fg_stroke = Stroke::new(1.0, TEXT_SAND);
-    visuals.widgets.inactive.bg_stroke = Stroke::new(1.0, BORDER_SUBTLE);
+    visuals.widgets.inactive.fg_stroke = Stroke::new(1.0_f32, TEXT_SAND);
+    visuals.widgets.inactive.bg_stroke = Stroke::new(1.0_f32, BORDER_SUBTLE);
     visuals.widgets.inactive.rounding = Rounding::same(5.0);
 
     visuals.widgets.hovered.bg_fill = Color32::from_rgb(46, 56, 82);
-    visuals.widgets.hovered.fg_stroke = Stroke::new(1.2, SPICE_GOLD);
-    visuals.widgets.hovered.bg_stroke = Stroke::new(1.2, SPICE_AMBER);
+    visuals.widgets.hovered.fg_stroke = Stroke::new(1.2_f32, SPICE_GOLD);
+    visuals.widgets.hovered.bg_stroke = Stroke::new(1.2_f32, SPICE_AMBER);
     visuals.widgets.hovered.rounding = Rounding::same(5.0);
 
     visuals.widgets.active.bg_fill = Color32::from_rgb(74, 52, 20);
-    visuals.widgets.active.fg_stroke = Stroke::new(1.5, Color32::WHITE);
-    visuals.widgets.active.bg_stroke = Stroke::new(1.5, SPICE_GOLD);
+    visuals.widgets.active.fg_stroke = Stroke::new(1.5_f32, Color32::WHITE);
+    visuals.widgets.active.bg_stroke = Stroke::new(1.5_f32, SPICE_GOLD);
     visuals.widgets.active.rounding = Rounding::same(5.0);
 
     visuals.selection.bg_fill = Color32::from_rgba_unmultiplied(234, 164, 58, 75);
-    visuals.selection.stroke = Stroke::new(1.0, SPICE_GOLD);
+    visuals.selection.stroke = Stroke::new(1.0_f32, SPICE_GOLD);
 
     ctx.set_visuals(visuals);
 }
@@ -50,7 +50,7 @@ pub fn apply_modern_mud_theme(ctx: &egui::Context) {
 pub fn card_frame() -> egui::Frame {
     egui::Frame::none()
         .fill(CARD_BG)
-        .stroke(Stroke::new(1.0, BORDER_SUBTLE))
+        .stroke(Stroke::new(1.0_f32, BORDER_SUBTLE))
         .rounding(Rounding::same(7.0))
         .inner_margin(egui::Margin::same(10.0))
 }
@@ -75,7 +75,11 @@ pub fn draw_hp_bar(ui: &mut egui::Ui, hp: i32, max_hp: i32, status_label: &str, 
     let mut fill = rect;
     fill.set_width(rect.width() * ratio);
     painter.rect_filled(fill, Rounding::same(4.0), bar_color);
-    painter.rect_stroke(rect, Rounding::same(4.0), Stroke::new(1.0, BORDER_SUBTLE));
+    painter.rect_stroke(
+        rect,
+        Rounding::same(4.0),
+        Stroke::new(1.0_f32, BORDER_SUBTLE),
+    );
 
     painter.text(
         rect.center(),

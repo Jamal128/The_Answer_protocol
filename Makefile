@@ -1,7 +1,7 @@
 CARGO := cargo
 WORLD_FILE ?= data/world.yaml
 HOST ?= 127.0.0.1
-PORT ?= 4242
+PORT ?= 4243
 
 .PHONY: all install build run-server run-client run-client-gui lint test clean
 

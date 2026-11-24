@@ -905,22 +905,22 @@ impl GameState {
     }
 
     fn complete_quest(&mut self, username: &str, quest_id: &str, reward_item: &str) {
-            if let Some(p) = self.players.get_mut(username) {
-                p.quests.insert(quest_id.to_string(), QuestState::Completed);
-                if !p.inventory.iter().any(|item| item == reward_item) {
-                    p.inventory.push(reward_item.to_string());
-                }
+        if let Some(p) = self.players.get_mut(username) {
+            p.quests.insert(quest_id.to_string(), QuestState::Completed);
+            if !p.inventory.iter().any(|item| item == reward_item) {
+                p.inventory.push(reward_item.to_string());
             }
-
-            info!(event = "quest_completed", %username, %quest_id, %reward_item);
-            self.send_to_player(
-                username,
-                ServerEvent::QuestComplete {
-                    quest_id: quest_id.to_string(),
-                    reward: reward_item.to_string(),
-                },
-            );
         }
+
+        info!(event = "quest_completed", %username, %quest_id, %reward_item);
+        self.send_to_player(
+            username,
+            ServerEvent::QuestComplete {
+                quest_id: quest_id.to_string(),
+                reward: reward_item.to_string(),
+            },
+        );
+    }
 
     fn cmd_group(&mut self, username: &str, action: GroupAction) -> ServerReply {
         match action {
